@@ -20,3 +20,16 @@ export const signin = (email, password) => {
     return false
   })
 }
+
+export const sendReferralEmail = (email) => {
+  return axios.post('/referral/send_email', { email })
+  .then((response) => {
+    if (response.status === 200) {
+      return true;
+    }
+    return false;
+  })
+  .catch((err) => {
+    return false;
+  })
+}

@@ -4,15 +4,23 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+import { sendReferralEmail } from 'helpers/request';
 
 function ReferFriendForm() {
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+
+    sendReferralEmail(email)
+    .then((status) => {
+      if (status === true) {
+        alert("Email Sent!");
+      } else {
+        alert("Could not send email!");
+      }
+    })
   };
 
   return (
@@ -21,6 +29,7 @@ function ReferFriendForm() {
         margin="normal"
         required
         fullWidth
+        type="email"
         id="email"
         label="Email Address"
         name="email"
