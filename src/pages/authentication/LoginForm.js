@@ -8,15 +8,21 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom"
+import { signin } from 'helpers/request';
 
-function LoginForm() {
-  const handleSubmit = (event) => {
+const LoginForm = () => {
+  let navigate = useNavigate();
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    signin(data.get("email"), data.get("password"))
+    .then((loggedIn) => {
+      if (loggedIn) {
+        navigate("/refer-friend")
+      }
+    })
   };
 
   return (
